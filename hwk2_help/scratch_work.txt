@@ -1,0 +1,24 @@
+    def importance_mesurement_batch(self, z):
+        """
+        @note: should be importance_me*a*surement_batch, for
+               compatibility reasons this will not be fixed in
+               this semester
+        @param z: stacked measurement vector 4x1
+        @note: Use `self.h1` instead of `measurement_model_1`
+        @note: Use `self.h2` instead of `measurement_model_2`
+        """
+        # compute importance weights
+        w = np.zeros(self.N)
+        # for i in range(self.N):
+        #     # compute innovation
+        #     v = ...
+        #     w[i] = ...
+
+        # update and normalize weights
+        # self.p['w'] = ...
+
+        # compute effective number of particles
+        # self.N_eff = ...
+
+        ---------------------
+        

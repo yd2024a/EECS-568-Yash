@@ -1,0 +1,53 @@
+    def importance_mesurement_batch(self, z):
+        """
+        @note: should be importance_me*a*surement_batch, for
+               compatibility reasons this will not be fixed in
+               this semester
+        @param z: stacked measurement vector 4x1
+        @note: Use `self.h1` instead of `measurement_model_1`
+        @note: Use `self.h2` instead of `measurement_model_2`
+        """
+        # compute importance weights
+        w = np.zeros(self.N)
+        # for i in range(self.N):
+        #     # compute innovation
+        #     v = ...
+        #     w[i] = ...
+
+        # update and normalize weights
+        # self.p['w'] = ...
+
+        # compute effective number of particles
+        # self.N_eff = ...
+
+        ---------------------
+            def importance_mesurement_batch(self, z):
+        """
+        @param z: stacked measurement vector 4x1
+        @note: Use `self.h1` instead of `measurement_model_1`
+        @note: Use `self.h2` instead of `measurement_model_2`
+        """
+        print("print importance_measurement_batch: z: ", z)
+        # Split the measurement vector into two parts
+        z_1 = z[:2]
+        z_2 = z[2:]
+        # compute importance weights
+        w = np.zeros(self.N)
+        for i in range(self.N):
+            # compute innovation for measurement 1
+            v1 = z_1 - self.h1(self.p['x'][i, :])
+            # compute innovation for measurement 2
+            v2 = z_2 - self.h2(self.p['x'][i, :])
+            # compute innovation (may not be needed, will double-check)
+            #     v = ...
+            # compute weights for both measurements and combine
+            w1 = multivariate_normal.pdf(v1.reshape(-1), np.array([0, 0]), self.R1)
+            w2 = multivariate_normal.pdf(v2.reshape(-1), np.array([0, 0]), self.R2)
+            w[i] = w1 * w2
+
+        # update and normalize weights
+        self.p['w'] = np.multiply(self.p['w'], w)
+        self.p['w'] = self.p['w'] / np.sum(self.p['w'])
+
+        # compute effective number of particles
+        self.N_eff = 1 / np.sum(np.power(self.p['w'], 2))
